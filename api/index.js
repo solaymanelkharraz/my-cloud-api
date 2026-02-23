@@ -1,30 +1,27 @@
 const express = require("express");
 const bodyParser = require("body-parser");
-const morgan = require("morgan");
 const { success } = require("../functions");
 
 const app = express();
-app.use(morgan("dev"));
 app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({ extended: true }));
 
+// CORS is required so your Vercel URL can talk to your API
 app.use((req, res, next) => {
     res.header("Access-Control-Allow-Origin", "*");
     res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
     next();
 });
 
-// Create the router exactly as shown in the Vercel PDF
-const CalculRouter = express.Router();
-
-CalculRouter.route("/somme").post((req, res) => {
-    let n1 = req.body.n1;
-    let n2 = req.body.n2;
-    let r = Number(n1) + Number(n2);
-    res.json(success("la somme de " + n1 + " et " + n2 + " est: " + r));
+// A simple test route to see if the API is working at all
+app.get("/api", (req, res) => {
+    res.send("API is awake and running!");
 });
 
-// IMPORTANT: Link the router to the path the HTML uses
-app.use("/api/v1", CalculRouter);
+// This matches the path in your index.html fetch('/api/v1/somme')
+app.post("/api/v1/somme", (req, res) => {
+    const { n1, n2 } = req.body;
+    const r = Number(n1) + Number(n2);
+    res.json(success("La somme est: " + r));
+});
 
 module.exports = app;
