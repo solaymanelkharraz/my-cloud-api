@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Cloud Calculator</title>
+</head>
+<body style="font-family: sans-serif; padding: 20px;">
+    <h2>Cloud Native Calculator</h2>
+    <input type="number" id="n1" placeholder="Number 1">
+    <input type="number" id="n2" placeholder="Number 2">
+    <button onclick="calculate()">Calculate Sum</button>
+    
+    <h3 id="result" style="color: green;"></h3>
+
+    <script>
+        async function calculate() {
+            const n1 = document.getElementById('n1').value;
+            const n2 = document.getElementById('n2').value;
+
+            const response = await fetch('/api/v1/somme', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ n1, n2 })
+            });
+            const data = await response.json();
+            document.getElementById('result').innerText = data.result;
+        }
+    </script>
+</body>
+</html>
