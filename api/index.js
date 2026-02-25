@@ -10,10 +10,22 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
 // CORS - allow React to talk to this API
+// CORS - allow React to talk to this API
 app.use(function(req, res, next) {
-    res.header("Access-Control-Allow-Origin", "*");
+    // Allows any origin to access the API. For production, you could replace "*" with your frontend's specific URL.
+    res.header("Access-Control-Allow-Origin", "*"); 
+    
+    // Explicitly allow the methods you are using
     res.header("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, OPTIONS");
-    res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+    
+    // Explicitly allow the headers your frontend might send
+    res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept, Authorization");
+
+    // Handle preflight requests
+    if (req.method === 'OPTIONS') {
+        return res.status(200).end();
+    }
+    
     next();
 });
 
