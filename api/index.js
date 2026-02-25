@@ -34,7 +34,7 @@ const db = mysql.createPool({
     connectionLimit: 10, // Allows up to 10 simultaneous connections
     host: 'mysql-jbala.alwaysdata.net', // Look in your Alwaysdata panel
     user: 'jbala',                 // Your Alwaysdata MySQL username
-    password: 'sql@2006!',          // Your Alwaysdata MySQL password
+    password: 'sql@2006',          // Your Alwaysdata MySQL password
     database: 'jbala_nodejs'            // Your Alwaysdata Database name          
 });
 
