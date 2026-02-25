@@ -30,20 +30,12 @@ app.use(function(req, res, next) {
 });
 
 // --- ALWAYSDATA CONNECTION ---
-// Replace these with your exact Alwaysdata credentials
-const db = mysql.createConnection({
+const db = mysql.createPool({
+    connectionLimit: 10, // Allows up to 10 simultaneous connections
     host: 'mysql-jbala.alwaysdata.net', // Look in your Alwaysdata panel
     user: 'jbala',                 // Your Alwaysdata MySQL username
     password: 'sql@2006!',          // Your Alwaysdata MySQL password
-    database: 'jbala_nodejs'            // Your Alwaysdata Database name
-});
-
-db.connect((err) => {
-    if (err) {
-        console.error('Database connection failed: ' + err.stack);
-        return;
-    }
-    console.log('---Connected to Alwaysdata MySQL :::');
+    database: 'jbala_nodejs'            // Your Alwaysdata Database name          
 });
 
 let MembersRouter = express.Router();
